@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: ranpo-backend
+  profiles:
+    active: local
