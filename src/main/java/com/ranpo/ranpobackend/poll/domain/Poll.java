@@ -11,6 +11,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 @Getter
 @Table(name = "polls")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityListeners(AuditingEntityListener.class)
 public class Poll {
 
     @Id
@@ -37,10 +39,13 @@ public class Poll {
 
     private LocalDateTime endAt;
 
+    @Enumerated(EnumType.STRING)
     private AuthType authType;
 
+    @Enumerated(EnumType.STRING)
     private WinnerSelectType winnerSelectType;
 
+    @Enumerated(EnumType.STRING)
     private WinnerScope winnerScope;
 
     private int totalWinnerCount;
@@ -49,8 +54,10 @@ public class Poll {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "poll_reward_id")
+    @Enumerated(EnumType.STRING)
     private PollReward pollReward;
 
+    @Enumerated(EnumType.STRING)
     private RewardMethod rewardMethod;
 
     @CreatedDate
