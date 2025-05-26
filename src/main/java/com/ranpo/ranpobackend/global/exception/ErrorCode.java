@@ -20,6 +20,11 @@ public enum ErrorCode {
     // OAuth2 로그인 : OAUTH2
     PROVIDER_TYPE_MISMATCH("OAUTH2_001", HttpStatus.BAD_REQUEST, "이미 해당 이메일로 가입된 계정이 존재합니다."),
 
+    // 인증/인가 : AUTH
+    INVALID_TOKEN_FORMAT("AUTH_001", HttpStatus.BAD_REQUEST, "잘못된 형식의 토큰입니다."),
+    EXPIRED_TOKEN("AUTH_002", HttpStatus.UNAUTHORIZED, "토큰이 만료되었습니다."),
+    INVALID_TOKEN_SIGNATURE("AUTH_003", HttpStatus.UNAUTHORIZED, "유효하지 않은 토큰 서명입니다."),
+    INVALID_TOKEN("AUTH_004", HttpStatus.UNAUTHORIZED, "토큰 검증에 실패했습니다.");
 
     private final String code;
     private final HttpStatus status;
