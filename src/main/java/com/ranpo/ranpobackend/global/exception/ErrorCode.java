@@ -15,7 +15,11 @@ public enum ErrorCode {
 
     // 사용자 : USER
     USER_NOT_FOUND("USER_001", HttpStatus.NOT_FOUND, "해당 사용자를 찾을 수 없습니다."),
-    EMAIL_ALREADY_EXISTS("USER_002", HttpStatus.CONFLICT, "이미 존재하는 이메일입니다.");
+    EMAIL_ALREADY_EXISTS("USER_002", HttpStatus.CONFLICT, "이미 존재하는 이메일입니다."),
+
+    // OAuth2 로그인 : OAUTH2
+    PROVIDER_TYPE_MISMATCH("OAUTH2_001", HttpStatus.BAD_REQUEST, "이미 해당 이메일로 가입된 계정이 존재합니다."),
+
 
     private final String code;
     private final HttpStatus status;
