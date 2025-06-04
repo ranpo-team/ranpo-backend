@@ -1,15 +1,15 @@
 package com.ranpo.ranpobackend.global.auth.jwt;
 
-import com.ranpo.ranpobackend.global.auth.dto.CurrentUser;
+import com.ranpo.ranpobackend.global.auth.dto.AuthenticatedUser;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 
 public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
-    private final CurrentUser currentUser;
+    private final AuthenticatedUser authenticatedUser;
 
-    public JwtAuthenticationToken(CurrentUser currentUser) {
-        super(currentUser.getAuthorities());
-        this.currentUser = currentUser;
+    public JwtAuthenticationToken(AuthenticatedUser authenticatedUser) {
+        super(authenticatedUser.getAuthorities());
+        this.authenticatedUser = authenticatedUser;
         setAuthenticated(true);
     }
 
@@ -20,6 +20,6 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
     @Override
     public Object getPrincipal() {
-        return currentUser;
+        return authenticatedUser;
     }
 }
