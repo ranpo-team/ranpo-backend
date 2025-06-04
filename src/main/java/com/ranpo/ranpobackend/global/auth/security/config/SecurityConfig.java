@@ -1,7 +1,8 @@
-package com.ranpo.ranpobackend.global.config;
+package com.ranpo.ranpobackend.global.auth.security.config;
 
 import com.ranpo.ranpobackend.global.auth.jwt.JwtAuthenticationFilter;
 import com.ranpo.ranpobackend.global.auth.jwt.JwtProvider;
+import com.ranpo.ranpobackend.global.auth.jwt.resolver.JwtResolver;
 import com.ranpo.ranpobackend.global.auth.oauth2.CustomOAuth2UserService;
 import com.ranpo.ranpobackend.global.auth.oauth2.handler.OAuth2LoginFailureHandler;
 import com.ranpo.ranpobackend.global.auth.oauth2.handler.OAuth2LoginSuccessHandler;
@@ -31,7 +32,7 @@ public class SecurityConfig {
     private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtProvider jwtProvider) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtProvider jwtProvider, JwtResolver jwtResolver) throws Exception {
         return http
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
@@ -52,7 +53,7 @@ public class SecurityConfig {
                         .successHandler(oAuth2LoginSuccessHandler)
                         .failureHandler(oAuth2LoginFailureHandler)
                 )
-                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, jwtResolver), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
@@ -60,7 +61,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
-        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+        configuration.setAllowedOrigins(List.of("http://localhost:3000")); // TODO : 실제 도메인으로 변경 필요
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
