@@ -75,3 +75,8 @@ spring:
 jwt:
   secret:
     key: ${JWT_SECRET_KEY}
+  source: ${JWT_EXTRACT_SOURCE}
+---
+# Cookie
+cookie:
+  secure: ${COOKIE_SECURE}
