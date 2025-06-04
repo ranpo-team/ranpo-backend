@@ -1,6 +1,7 @@
 package com.ranpo.ranpobackend.global.auth.jwt;
 
-import com.ranpo.ranpobackend.global.auth.dto.CurrentUser;
+import com.ranpo.ranpobackend.global.auth.dto.AuthenticatedUser;
+import com.ranpo.ranpobackend.global.auth.jwt.resolver.JwtResolver;
 import com.ranpo.ranpobackend.global.exception.CustomException;
 import com.ranpo.ranpobackend.member.domain.enums.MemberRole;
 import io.jsonwebtoken.Claims;
@@ -20,6 +21,7 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtProvider jwtProvider;
+    private final JwtResolver jwtResolver;
 
     @Override
     protected void doFilterInternal(
@@ -27,11 +29,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
-        String authHeader = request.getHeader("Authorization");
+        String token = jwtResolver.resolve(request);
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = jwtProvider.substringToken(authHeader);
-
+        if (token != null) {
             try {
                 Claims claims = jwtProvider.extractClaims(token);
 
@@ -53,8 +53,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String nickname = claims.get("nickname", String.class);
         MemberRole memberRole = MemberRole.valueOf(claims.get("memberRole", String.class));
 
-        CurrentUser currentUser = new CurrentUser(id, email, nickname, memberRole);
-        JwtAuthenticationToken authenticationToken = new JwtAuthenticationToken(currentUser);
+        AuthenticatedUser authenticatedUser = new AuthenticatedUser(id, email, nickname, memberRole);
+        JwtAuthenticationToken authenticationToken = new JwtAuthenticationToken(authenticatedUser);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
     }
 }
