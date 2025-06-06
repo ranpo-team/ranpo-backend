@@ -2,6 +2,7 @@ package com.ranpo.ranpobackend.poll.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -33,4 +34,12 @@ public class PollOption {
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
+
+    @Builder
+    public PollOption(Poll poll, String content, int winnerCount, int sortOrder) {
+        this.poll = poll;
+        this.content = content;
+        this.winnerCount = winnerCount;
+        this.sortOrder = sortOrder;
+    }
 }
