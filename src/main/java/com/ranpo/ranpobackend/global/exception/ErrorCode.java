@@ -24,7 +24,10 @@ public enum ErrorCode {
     INVALID_TOKEN_FORMAT("AUTH_001", HttpStatus.BAD_REQUEST, "잘못된 형식의 토큰입니다."),
     EXPIRED_TOKEN("AUTH_002", HttpStatus.UNAUTHORIZED, "토큰이 만료되었습니다."),
     INVALID_TOKEN_SIGNATURE("AUTH_003", HttpStatus.UNAUTHORIZED, "유효하지 않은 토큰 서명입니다."),
-    INVALID_TOKEN("AUTH_004", HttpStatus.UNAUTHORIZED, "토큰 검증에 실패했습니다.");
+    INVALID_TOKEN("AUTH_004", HttpStatus.UNAUTHORIZED, "토큰 검증에 실패했습니다."),
+
+    // 투표 : POLL
+    POLL_NOT_FOUND("POLL_001", HttpStatus.NOT_FOUND, "해당 투표를 찾을 수 없습니다.");
 
     private final String code;
     private final HttpStatus status;
