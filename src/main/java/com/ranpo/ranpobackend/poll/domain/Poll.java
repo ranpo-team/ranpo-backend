@@ -4,7 +4,6 @@ import com.ranpo.ranpobackend.member.domain.Member;
 import com.ranpo.ranpobackend.poll.domain.enums.AuthType;
 import com.ranpo.ranpobackend.poll.domain.enums.WinnerScope;
 import com.ranpo.ranpobackend.poll.domain.enums.WinnerSelectType;
-import com.ranpo.ranpobackend.reward.domain.PollReward;
 import com.ranpo.ranpobackend.reward.domain.enums.RewardMethod;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -54,7 +53,7 @@ public class Poll {
     private int totalWinnerCount;
 
     @OneToMany(mappedBy = "poll", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    private List<PollOption> options = new ArrayList<>();
+    private List<PollOption> pollOptions = new ArrayList<>();
 
     private Boolean rewardEnabled;
 
