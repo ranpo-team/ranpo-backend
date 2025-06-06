@@ -1,5 +1,6 @@
 package com.ranpo.ranpobackend.member.domain;
 
+import com.ranpo.ranpobackend.global.auth.dto.AuthenticatedUser;
 import com.ranpo.ranpobackend.member.domain.enums.MemberRole;
 import com.ranpo.ranpobackend.member.domain.enums.ProviderType;
 import jakarta.persistence.*;
@@ -52,5 +53,12 @@ public class Member {
         this.uid = uid;
         this.role = role;
         this.providerType = providerType;
+    }
+
+    public Member(AuthenticatedUser user) {
+        this.id = user.getId();
+        this.email = user.getEmail();
+        this.nickname = user.getNickname();
+        this.role = user.getMemberRole();
     }
 }
